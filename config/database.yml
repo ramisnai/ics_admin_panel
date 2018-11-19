@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: sensors_admin_panel
+  username: admin
+  password:
+  host: localhost
+  port: 5432
+
+# production:
+#   <<: *default
+#   database: ics_admin_panel
+#   username: rails_rami
+#   password: 
+#   host: localhost
+#   port: 5432   

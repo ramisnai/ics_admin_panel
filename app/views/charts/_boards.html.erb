@@ -1,0 +1,71 @@
+<style type="text/css">
+  .col-lg-3 {
+    width: 33%;
+    font-size: 20px;
+}
+</style>
+<!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bullseye fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                      <% @yearly.each do |pr| %>
+                                        <%= pr.target %>
+                                      <% end %>
+                                    </div>
+                                    <div>Target</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-check fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                      <% @yearly.each do |pr| %>
+                                        <%= pr.actual %>
+                                      <% end %>
+                                    </div>
+                                    <div>Actual</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-chevron-up fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                     <% @yearly.each do |pr| %>
+                                     <%= pr.progress %>
+                                     <% end %>
+                                     % 
+                                    </div>
+
+                                    <div>Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+                    </div>
+                </div>
+            </div>
