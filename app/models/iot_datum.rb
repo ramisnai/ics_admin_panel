@@ -3,15 +3,37 @@ class IotDatum < ActiveRecord::Base
 
 validates_presence_of :part_number
 	
-  def self.import(file)
+  def self.import(file,bu)
+    puts "----1---#{bu}------"
     spreadsheet = Roo::Spreadsheet.open(file.path)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      product = find_by(id: row["workbench_number"]) || new
+      if bu == 'RE'
+        puts "----2---#{bu}------"
+        product = find_by(id: row["site"]) || new
+      else
+        puts "----3---#{bu}------"
+        product = find_by(id: row["workbench_number"]) || new
+      end
       product.attributes = row.to_hash
       return false unless product.valid?
       product.save!
+    end
+  end 
+
+  #For RE
+
+  def self.import_re(file)
+    # puts "----2---------"
+    spreadsheet = Roo::Spreadsheet.open(file.path)
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      re_planner_data = find_by(id: row["site"]) || new
+      re_planner_data.attributes = row.to_hash
+      return false unless re_planner_data.valid?
+      re_planner_data.save!
     end
   end 
 

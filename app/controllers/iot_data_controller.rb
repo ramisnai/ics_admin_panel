@@ -10,6 +10,7 @@ class IotDataController < ApplicationController
     device_id = params[:device_id] if params[:device_id]
     count = params[:count] if params[:count]
     part = params[:part_number] if params[:part_number]
+    @bu = current_user.bu
     @iot_data = IotDatum.where("device_id = ? and count = ? and part_number = ?", params[:device_id],params[:count], params[:part_number]) if device_id && count && part
       
       if params[:status] && params[:device_id]
@@ -42,19 +43,31 @@ class IotDataController < ApplicationController
       end
       puts "1 end"
     end 
-
-    @iot_data_yts = IotDatum.where("status = ?", 'YTS')
-    @iot_data_pro = IotDatum.where("status = ?", 'Processing')
-    @iot_data_comp = IotDatum.where("status = ?", 'Process Completed')
+    # ICS - TVS Motors
+    @iot_data_yts = IotDatum.where("status = ? and site = ?", 'YTS', 'NULL')
+    @iot_data_pro = IotDatum.where("status = ? and site = ?", 'Processing', 'NULL')
+    @iot_data_comp = IotDatum.where("status = ? and site = ?", 'Process Completed', 'NULL')
     
     @active_devices = WorkbenchMaster.where("machine_status = ?", 'A')
     @inactive_devices = WorkbenchMaster.where("machine_status = ?", 'IA')
-    @completed_parts = IotDatum.where("status = ?", 'Process Completed')
-    @processing_parts = IotDatum.where("status = ?", 'Processing')
+    @completed_parts = IotDatum.where("status = ? and site = ?", 'Process Completed', 'NULL')
+    @processing_parts = IotDatum.where("status = ? and site = ?", 'Processing', 'NULL')
 
-    @duration = IotDatum.select("(updated_at - created_at) AS duration").where("status = ?", 'Process Completed')
+    @duration = IotDatum.select("(updated_at - created_at) AS duration").where("status = ? and site = ?", 'Process Completed', 'NULL')
 
-    
+    # ICS - Royal Enfield
+    if current_user.bu == 'RE'
+      @iot_data_yts = IotDatum.where("status = ? and site = ?", 'YTS', 'RE')
+      @iot_data_pro = IotDatum.where("status = ? and site = ?", 'Processing', 'RE')
+      @iot_data_comp = IotDatum.where("status = ? and site = ?", 'Process Completed', 'RE')
+
+      @active_devices = WorkbenchMaster.where("machine_status = ?", 'A')
+      @inactive_devices = WorkbenchMaster.where("machine_status = ?", 'IA')
+      @completed_parts = IotDatum.where("status = ? and site = ?", 'Process Completed', 'RE')
+      @processing_parts = IotDatum.where("status = ? and site = ?", 'Processing', 'RE')
+
+      @duration = IotDatum.select("(updated_at - created_at) AS duration").where("status = ? and site = ?", 'Process Completed', 'RE')
+    end
   end
 
   # GET /iot_data/1

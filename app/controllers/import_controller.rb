@@ -21,13 +21,20 @@ class ImportController < ApplicationController
 	end
 
 	def import
+		bu = current_user.bu
 		case params[:select]
-		when 'Planner'
-	    if IotDatum.import(params[:file])
+		when 'TVSM Planner'
+			if IotDatum.import(params[:file],bu)
 	    		redirect_to iot_data_path, notice: 'Data imported.'
 	    else
 	    		redirect_to import_index_path, notice: 'Part Code Already Assigned for a Device'
 	    end
+	  when 'RE-Planner'
+	    if IotDatum.import(params[:file],bu)
+	    		redirect_to iot_data_path, notice: 'Royal Enfield Data imported.'
+	    else
+	    		redirect_to import_index_path, notice: 'Royal Enfield Data imported.'
+	    end  
 	  when 'Parts Master'
 	  	puts "Part Master"
 	  	PartMaster.import(params[:file])

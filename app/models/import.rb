@@ -6,6 +6,7 @@ class Import < ActiveRecord::Base
   validates_uniqueness_of :part_number, :message => "^Friendly field name is blank Import"
 
 	def self.import(file)
+    puts "-----import----"
     spreadsheet = Roo::Spreadsheet.open(file.path)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|

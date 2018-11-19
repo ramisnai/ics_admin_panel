@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181119055852) do
+ActiveRecord::Schema.define(version: 20181119093132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,10 @@ ActiveRecord::Schema.define(version: 20181119055852) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "status"
+    t.string   "site"
+    t.string   "location"
+    t.string   "asn_code"
+    t.string   "bar_code"
   end
 
   create_table "iot_data", force: :cascade do |t|
@@ -107,6 +111,10 @@ ActiveRecord::Schema.define(version: 20181119055852) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "status"
+    t.string   "site"
+    t.string   "location"
+    t.string   "asn_code"
+    t.string   "bar_code"
   end
 
   create_table "measures", force: :cascade do |t|
